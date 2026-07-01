@@ -1,0 +1,49 @@
+---
+import type { HTMLTag, Polymorphic } from "astro/types";
+
+type Props<Tag extends HTMLTag = "p"> = Polymorphic<{ as: Tag }> & {
+  text: string;
+  /** delay in seconds */
+  delay?: number;
+  /** stagger per word in seconds */
+  stagger?: number;
+  start?: string;
+};
+
+const {
+  as: Tag = "p",
+  class: className,
+  text,
+  delay = 0,
+  stagger = 0.045,
+  start = "top 90%",
+  ...rest
+} = Astro.props;
+
+const words = text.split(" ");
+---
+
+<Tag
+  {...rest}
+  class:list={["text-balance", className]}
+  data-text-reveal
+  data-text-reveal-delay={delay}
+  data-text-reveal-stagger={stagger}
+  data-text-reveal-start={start}
+>
+  {
+    words.map((word, i) => (
+      <span class="inline-flex overflow-hidden align-bottom">
+        <span data-word class="inline-block will-change-transform">
+          {word}
+        </span>
+        {i < words.length - 1 ? "\u00A0" : ""}
+      </span>
+    ))
+  }
+</Tag>
+
+<script>
+  import { initTextReveal } from "../../components/animations/text-reveal";
+  initTextReveal();
+</script>

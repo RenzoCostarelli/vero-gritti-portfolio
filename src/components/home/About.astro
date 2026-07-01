@@ -1,0 +1,78 @@
+---
+import Reveal from "../animations/Reveal.astro";
+import TextReveal from "../animations/TextReveal.astro";
+
+const facts = [
+  { value: "20+", label: "Years leading brand & design" },
+  { value: "2006", label: "Founded Ampersand Group" },
+  { value: "6 yrs", label: "In-house agency for BCR" },
+  { value: "C-level", label: "Client management" },
+];
+---
+
+<section id="about" class="border-t border-border px-5 py-24 md:px-10 md:py-32">
+  <div class="mx-auto grid max-w-7xl gap-12 lg:grid-cols-12 lg:gap-16">
+    <div class="lg:col-span-5">
+      <Reveal>
+        <p
+          class="text-[11px] uppercase tracking-[0.22em] text-muted-foreground"
+        >
+          (01) About
+        </p>
+      </Reveal>
+      <Reveal delay={0.05} class="mt-8">
+        <div
+          class="relative aspect-[4/5] w-full overflow-hidden rounded-sm bg-muted"
+        >
+          <img
+            src="/portrait.png"
+            alt="Portrait of Verónica Rositto Gritti"
+            sizes="(max-width: 1024px) 100vw, 40vw"
+            class="object-cover"
+          />
+        </div>
+      </Reveal>
+    </div>
+
+    <div class="lg:col-span-7 lg:pt-12">
+      <TextReveal
+        as="h2"
+        text="Creative director and brand strategist leading identity, communication and design systems for growing organisations."
+        class="font-serif text-3xl font-light leading-[1.12] tracking-tight sm:text-4xl md:text-5xl"
+      />
+
+      <div
+        class="mt-8 max-w-2xl space-y-5 text-pretty leading-relaxed text-muted-foreground"
+      >
+        <Reveal as="p">
+          I founded Ampersand Group in 2006 and spent six years as BCR’s
+          in-house agency — managing teams, suppliers and multiple communication
+          streams in parallel within a complex institutional environment.
+        </Reveal>
+        <Reveal as="p" delay={0.08}>
+          My edge: translating business decisions into coherent visual systems
+          and sustaining them at scale, without losing strategic focus or
+          execution quality. I work across institutional, logistics, agro,
+          technology, cosmetics and culture.
+        </Reveal>
+      </div>
+
+      <div
+        class="mt-12 grid grid-cols-2 gap-px overflow-hidden rounded-sm border border-border bg-border sm:grid-cols-4"
+      >
+        {
+          facts.map((fact, i) => (
+            <Reveal delay={i * 0.06} class="bg-background p-5">
+              <p class="font-serif text-3xl font-light tracking-tight">
+                {fact.value}
+              </p>
+              <p class="mt-2 text-xs leading-snug text-muted-foreground">
+                {fact.label}
+              </p>
+            </Reveal>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+</section>

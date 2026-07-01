@@ -1,0 +1,152 @@
+---
+const links = [
+  { href: "/", label: "Home" },
+  { href: "/portfolio", label: "Portfolio" },
+  { href: "/contact", label: "Contact" },
+];
+
+const pathname = Astro.url.pathname;
+---
+
+<header
+  id="navbar"
+  class="fixed inset-x-0 top-0 z-50 border-b border-transparent transition-colors duration-500"
+>
+  <nav
+    class="mx-auto flex max-w-7xl items-center justify-between px-5 py-4 md:px-10 md:py-5"
+  >
+    <a
+      href="/"
+      class="group flex flex-col leading-none"
+      aria-label="Verónica Rositto Gritti — home"
+    >
+      <span class="font-serif text-lg tracking-tight md:text-xl">
+        Verónica Rositto Gritti
+      </span>
+      <span
+        class="mt-0.5 text-[11px] uppercase tracking-[0.18em] text-muted-foreground"
+      >
+        Brand Strategy · Creative Direction
+      </span>
+    </a>
+
+    <ul class="hidden items-center gap-8 md:flex">
+      {
+        links.map((link) => {
+          const active =
+            link.href === "/"
+              ? pathname === "/"
+              : pathname.startsWith(link.href);
+          return (
+            <li>
+              <a href={link.href} class="group relative text-sm tracking-wide">
+                <span
+                  class:list={[
+                    "transition-colors",
+                    active
+                      ? "text-foreground"
+                      : "text-muted-foreground hover:text-foreground",
+                  ]}
+                >
+                  {link.label}
+                </span>
+                <span
+                  class:list={[
+                    "absolute -bottom-1 left-0 h-px bg-foreground transition-all duration-300",
+                    active ? "w-full" : "w-0 group-hover:w-full",
+                  ]}
+                />
+              </a>
+            </li>
+          );
+        })
+      }
+    </ul>
+
+    <button
+      type="button"
+      id="menu-toggle"
+      class="flex h-9 w-9 flex-col items-center justify-center gap-1.5 md:hidden"
+      aria-label="Toggle menu"
+      aria-expanded="false"
+    >
+      <span
+        id="hamburger-top"
+        class="h-px w-6 bg-foreground transition-transform duration-300"
+      ></span>
+      <span
+        id="hamburger-bottom"
+        class="h-px w-6 bg-foreground transition-transform duration-300"
+      ></span>
+    </button>
+  </nav>
+
+  <!-- Mobile menu -->
+  <div
+    id="mobile-menu"
+    class="max-h-0 overflow-hidden border-t border-border bg-background transition-[max-height] duration-500 md:hidden"
+  >
+    <ul class="flex flex-col px-5 py-2">
+      {
+        links.map((link, index) => {
+          const active =
+            link.href === "/"
+              ? pathname === "/"
+              : pathname.startsWith(link.href);
+          return (
+            <li>
+              <a
+                href={link.href}
+                class:list={[
+                  "flex items-center justify-between border-b border-border py-4 font-serif text-2xl",
+                  active ? "text-foreground" : "text-muted-foreground",
+                ]}
+              >
+                {link.label}
+                <span class="text-xs">{`0${index + 1}`}</span>
+              </a>
+            </li>
+          );
+        })
+      }
+    </ul>
+  </div>
+</header>
+
+<script>
+  // --- Scroll detection ---
+  const navbar = document.getElementById("navbar");
+
+  function updateScrollState(): void {
+    if (!navbar) return;
+    const scrolled = window.scrollY > 10;
+    navbar.classList.toggle("border-border", scrolled);
+    navbar.classList.toggle("bg-background/85", scrolled);
+    navbar.classList.toggle("backdrop-blur-md", scrolled);
+    navbar.classList.toggle("border-transparent", !scrolled);
+  }
+
+  window.addEventListener("scroll", updateScrollState, { passive: true });
+  updateScrollState();
+
+  // --- Mobile menu toggle ---
+  const menuToggle = document.getElementById("menu-toggle");
+  const mobileMenu = document.getElementById("mobile-menu");
+  const hamburgerTop = document.getElementById("hamburger-top");
+  const hamburgerBottom = document.getElementById("hamburger-bottom");
+
+  function toggleMenu(): void {
+    const isOpen = menuToggle?.getAttribute("aria-expanded") === "true";
+    const open = !isOpen;
+
+    menuToggle?.setAttribute("aria-expanded", String(open));
+    mobileMenu?.classList.toggle("max-h-64", open);
+    mobileMenu?.classList.toggle("max-h-0", !open);
+    hamburgerTop?.classList.toggle("translate-y-[3.5px]", open);
+    hamburgerTop?.classList.toggle("rotate-45", open);
+    hamburgerBottom?.classList.toggle("-translate-y-[3.5px]", open);
+    hamburgerBottom?.classList.toggle("-rotate-45", open);
+  }
+
+  menuToggle?.addEventListener("click", toggleMenu);
+</script>

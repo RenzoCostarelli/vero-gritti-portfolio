@@ -1,0 +1,36 @@
+---
+import { clients } from "../../lib/data/prjects";
+
+const items = [...clients, ...clients];
+---
+
+<section class="overflow-hidden border-t border-border py-16 md:py-20">
+  <div class="mx-auto mb-10 max-w-7xl px-5 md:px-10">
+    <p class="text-[11px] uppercase tracking-[0.22em] text-muted-foreground">
+      (04) Selected clients
+    </p>
+  </div>
+  <div class="relative">
+    <div class="flex w-max">
+      {
+        items.map((client, i) => (
+          <div class="flex shrink-0 items-center gap-10 px-8 md:gap-16 md:px-12">
+            <span class="whitespace-nowrap font-serif text-2xl font-light tracking-tight text-muted-foreground md:text-4xl">
+              {client}
+            </span>
+            <span class="h-1.5 w-1.5 rounded-full bg-accent" />
+          </div>
+        ))
+      }
+    </div>
+    {/* edge fades */}
+    <div
+      class="pointer-events-none absolute inset-y-0 left-0 w-16 bg-gradient-to-r from-background to-transparent md:w-32"
+    >
+    </div>
+    <div
+      class="pointer-events-none absolute inset-y-0 right-0 w-16 bg-gradient-to-l from-background to-transparent md:w-32"
+    >
+    </div>
+  </div>
+</section>

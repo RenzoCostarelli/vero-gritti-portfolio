@@ -1,0 +1,37 @@
+---
+import type { HTMLTag, Polymorphic } from "astro/types";
+
+type Props<Tag extends HTMLTag = "div"> = Polymorphic<{ as: Tag }> & {
+  /** delay in seconds */
+  delay?: number;
+  /** vertical travel distance in px */
+  y?: number;
+  once?: boolean;
+};
+
+const {
+  as: Tag = "div",
+  class: className,
+  delay = 0,
+  y = 28,
+  once = true,
+  ...rest
+} = Astro.props;
+---
+
+<Tag
+  {...rest}
+  class={className}
+  style="opacity:0"
+  data-reveal
+  data-reveal-delay={delay}
+  data-reveal-y={y}
+  data-reveal-once={once}
+>
+  <slot />
+</Tag>
+
+<script>
+  import { initReveal } from "../../components/animations/reveal";
+  initReveal();
+</script>

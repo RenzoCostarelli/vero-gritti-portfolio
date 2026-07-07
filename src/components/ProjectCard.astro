@@ -3,7 +3,9 @@ const { project, index, className } = Astro.props;
 ---
 
 <a href={`/portfolio/${project.slug}`} class:list={["group block", className]}>
-  <div class="relative aspect-[4/3] w-full overflow-hidden rounded-sm bg-muted">
+  <div
+    class="relative aspect-[4/3] w-full overflow-hidden rounded-md bg-neutral-100"
+  >
     <img
       src={project.cover || "/placeholder.svg"}
       alt={project.title}

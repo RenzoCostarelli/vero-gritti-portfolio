@@ -9,22 +9,21 @@ import TextReveal from "../animations/TextReveal.astro";
 >
   <div class="mx-auto grid container gap-12 lg:grid-cols-12">
     <div class="lg:col-span-7">
-      <p class="text-[11px] uppercase tracking-[0.22em] text-muted-foreground">
-        (05) Get in touch
-      </p>
-      <TextReveal
-        as="h2"
-        text="Available for Brand Strategy Lead, Head of Design or Creative Direction roles."
-        class="mt-6 max-w-3xl font-serif text-3xl font-light leading-[1.12] tracking-tight sm:text-4xl md:text-5xl"
-      />
-      <Reveal
-        as="p"
-        delay={0.05}
-        class="mt-6 max-w-xl text-pretty leading-relaxed text-muted-foreground"
+      <h2
+        class="mt-6 font-serif font-light leading-[1.12] tracking-tight md:text-[1.65rem] flex flex-col"
       >
-        At creative agencies, strategic consultancies or brand-led
-        organisations. Open to international roles.
-      </Reveal>
+        <TextReveal
+          as="span"
+          text="Available for Brand Strategy Lead, Head of Design or Creative Direction roles"
+        />
+        {" "}
+        <TextReveal
+          as="span"
+          text="at creative agencies, strategic consultancies or brand-led organisations."
+          class="italic text-foreground/40"
+        />
+      </h2>
+
       <Reveal delay={0.1} class="mt-10">
         <a
           href="/contact"

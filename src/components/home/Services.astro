@@ -16,11 +16,18 @@ import TextReveal from "../animations/TextReveal.astro";
         </p>
       </div>
       <div class="">
-        <TextReveal
-          as="h2"
-          text="Six disciplines, one systemic way of working."
-          class="ont-serif text-3xl font-light leading-[1.12] tracking-tight sm:text-4xl md:text-5xl"
-        />
+        <h2 class="font-serif text-3xl font-light leading-[1.12] tracking-tight sm:text-4xl md:text-5xl">
+          <TextReveal
+            as="span"
+            text="Six disciplines,"
+          />
+          {" "}
+          <TextReveal
+            as="span"
+            text="one systemic way of working."
+            class="italic text-foreground/40"
+          />
+        </h2>
       </div>
     </div>
 

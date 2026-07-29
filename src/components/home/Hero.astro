@@ -3,23 +3,15 @@ const lines = ["Brand thinking", "that holds up", "at scale."];
 ---
 
 <section
-  class="relative flex min-h-[100svh] flex-col justify-between px-5 pb-10 pt-32 md:px-10 md:pt-40"
+  class="relative flex flex-col justify-between px-5 pb-10 pt-32 md:px-10 md:pt-60 md:pb-16"
 >
-  <div class="mx-auto flex w-full max-w-7xl flex-1 flex-col justify-center">
-    <p
-      data-fade
-      class="mb-8 max-w-md text-[11px] uppercase tracking-[0.22em] text-neutral-900"
-    >
-      Verónica Rositto Gritti — Brand Strategy Lead · Head of Design · Creative
-      Direction
-    </p>
-
+  <div class="mx-auto flex w-full container flex-1 flex-col justify-center">
     <h1
-      class="font-serif text-[clamp(2.75rem,11vw,9rem)] font-light leading-[0.92] tracking-[-0.02em]"
+      class="font-serif text-[clamp(2.75rem,3.8vw,6rem)] font-light leading-[0.92] tracking-[-0.02em]"
     >
       {
         lines.map((line, i) => (
-          <span data-line class="block ">
+          <span data-line class="mr-3">
             <span class="inline-block will-change-transform">
               {i === 1 ? (
                 <em class="font-serif italic text-accent">{line}</em>
@@ -33,35 +25,15 @@ const lines = ["Brand thinking", "that holds up", "at scale."];
     </h1>
 
     <div
-      class="mt-10 flex max-w-xl flex-col gap-6 sm:flex-row sm:items-end sm:justify-between"
+      class="mt-3 flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between md:ml-1"
     >
       <p
         data-fade
-        class="max-w-sm text-pretty leading-relaxed text-neutral-900"
+        class="text-pretty text-[clamp(1.2rem,0.5vw,1rem)] max-w-3xl leading-none text-neutral-900"
       >
-        I translate business decisions into coherent visual systems — and
-        sustain them at scale, without losing strategic focus or execution
-        quality.
+        I translate business decisions into coherenty visual system and sustain
+        them at scale, without losing strategic focus or execution quality
       </p>
-      <!-- BUSCAR COMPONENTE MAGNETIC EN EL V0 -->
     </div>
-  </div>
-
-  <div
-    data-hero-meta
-    class="mx-auto flex w-full max-w-7xl items-center justify-between border-t border-border pt-6"
-  >
-    <span
-      data-fade
-      class="flex items-center gap-2 text-xs uppercase tracking-[0.18em] text-neutral-900"
-    >
-      Scroll
-    </span>
-    <span
-      data-fade
-      class="text-xs uppercase tracking-[0.18em] text-neutral-900"
-    >
-      Rosario, AR · Open to international roles
-    </span>
   </div>
 </section>

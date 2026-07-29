@@ -6,38 +6,38 @@ import TextReveal from "../animations/TextReveal.astro";
 
 <section
   id="services"
-  class="border-t border-border bg-foreground px-5 py-24 text-background md:px-10 md:py-32"
+  class="border-t border-border bg-background px-5 py-24 text-foreground md:px-10 md:py-32"
 >
-  <div class="mx-auto max-w-7xl">
-    <div class="grid gap-8 lg:grid-cols-12">
-      <div class="lg:col-span-4">
-        <p class="text-[11px] uppercase tracking-[0.22em] text-background/50">
+  <div class="mx-auto container">
+    <div class="flex flex-col gap-8">
+      <div class="">
+        <p class="text-[11px] uppercase tracking-[0.22em] text-foreground/50">
           (02) What I do
         </p>
       </div>
-      <div class="lg:col-span-8">
+      <div class="">
         <TextReveal
           as="h2"
           text="Six disciplines, one systemic way of working."
-          class="max-w-2xl font-serif text-3xl font-light leading-[1.12] tracking-tight sm:text-4xl md:text-5xl"
+          class="ont-serif text-3xl font-light leading-[1.12] tracking-tight sm:text-4xl md:text-5xl"
         />
       </div>
     </div>
 
-    <ul class="mt-16 border-t border-background/15">
+    <ul class="mt-16 border-t border-foreground/15">
       {
         services.map((service) => (
           <li
             data-row
-            class="group grid gap-4 border-b border-background/15 py-8 transition-colors hover:bg-background/[0.04] md:grid-cols-12 md:gap-8 md:py-10"
+            class="group grid gap-4 border-b border-foreground/15 py-8 transition-colors hover:bg-foreground/4 md:grid-cols-12 md:gap-8 md:py-10"
           >
-            <span class="font-mono text-xs text-background/50 md:col-span-1">
+            <span class="font-mono text-xs text-foreground/50 md:col-span-1">
               {service.number}
             </span>
             <h3 class="font-serif text-2xl font-light tracking-tight transition-transform duration-500 group-hover:translate-x-2 md:col-span-5 md:text-3xl">
               {service.title}
             </h3>
-            <p class="max-w-md text-pretty leading-relaxed text-background/60 md:col-span-6">
+            <p class="max-w-md text-pretty leading-relaxed text-foreground/60 md:col-span-6">
               {service.description}
             </p>
           </li>
@@ -46,7 +46,7 @@ import TextReveal from "../animations/TextReveal.astro";
     </ul>
 
     <Reveal class="mt-12">
-      <p class="text-sm text-background/50">
+      <p class="text-sm text-foreground/50">
         Sector experience — Institutional · Logistics &amp; Agro · Technology ·
         Industrial Services · Cosmetics · Culture
       </p>

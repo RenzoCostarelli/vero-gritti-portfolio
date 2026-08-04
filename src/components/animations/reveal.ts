@@ -1,10 +1,14 @@
-import { gsap } from "../../lib/gsap";
+import { gsap, ScrollTrigger } from "../../lib/gsap";
 
 function prefersReducedMotion(): boolean {
   return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 }
 
 export function initReveal(): void {
+  ScrollTrigger.getAll()
+    .filter((t) => t.trigger?.hasAttribute("data-reveal"))
+    .forEach((t) => t.kill());
+
   const elements = document.querySelectorAll<HTMLElement>("[data-reveal]");
 
   elements.forEach((el) => {

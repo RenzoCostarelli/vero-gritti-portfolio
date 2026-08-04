@@ -1,0 +1,81 @@
+---
+import { projects } from "../../lib/data/prjects";
+import Reveal from "../animations/Reveal.astro";
+import ProjectCard from "../ProjectCard.astro";
+
+const categories = [
+  "All",
+  ...Array.from(new Set(projects.map((p) => p.category))),
+];
+---
+
+<section class="px-5 pb-28 md:px-10">
+  <div class="mx-auto container">
+    <!-- Filter buttons -->
+    <Reveal
+      class="mb-12 flex flex-wrap items-center gap-2 border-y border-border py-4"
+    >
+      {
+        categories.map((cat) => (
+          <button
+            type="button"
+            data-filter={cat}
+            class:list={[
+              "rounded-full px-4 py-2 text-sm transition-colors",
+              cat === "All"
+                ? "bg-foreground text-background"
+                : "text-muted-foreground hover:text-foreground",
+            ]}
+          >
+            {cat}
+          </button>
+        ))
+      }
+    </Reveal>
+
+    <!-- Project grid -->
+    <div class="grid gap-x-8 gap-y-14 md:grid-cols-2">
+      {
+        projects.map((project, i) => (
+          <div data-project-item data-project-category={project.category}>
+            <Reveal delay={(i % 2) * 0.08}>
+              <ProjectCard project={project} index={i} />
+            </Reveal>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<script>
+  function initPortfolioFilter() {
+    const buttons =
+      document.querySelectorAll<HTMLButtonElement>("[data-filter]");
+    const items = document.querySelectorAll<HTMLElement>("[data-project-item]");
+
+    function setActive(filter: string) {
+      buttons.forEach((btn) => {
+        const isActive = btn.dataset.filter === filter;
+        btn.classList.toggle("bg-foreground", isActive);
+        btn.classList.toggle("text-background", isActive);
+        btn.classList.toggle("text-muted-foreground", !isActive);
+      });
+
+      items.forEach((item) => {
+        const match =
+          filter === "All" || item.dataset.projectCategory === filter;
+        item.style.display = match ? "" : "none";
+      });
+    }
+
+    buttons.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        setActive(btn.dataset.filter ?? "All");
+      });
+    });
+  }
+
+  initPortfolioFilter();
+  document.addEventListener("astro:page-load", initPortfolioFilter);
+</script>

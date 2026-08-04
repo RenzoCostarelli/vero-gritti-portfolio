@@ -1,0 +1,213 @@
+---
+import { services } from "../../lib/data/prjects";
+import Reveal from "../animations/Reveal.astro";
+---
+
+<form
+  method="post"
+  action="#"
+  class="space-y-10"
+  data-contact-form
+  novalidate
+>
+  <div class="grid gap-10 sm:grid-cols-2">
+    <Reveal class="flex flex-col gap-2">
+      <label
+        for="name"
+        class="text-[11px] uppercase tracking-[0.22em] text-muted-foreground"
+      >
+        Full name <span class="text-accent">*</span>
+      </label>
+      <input
+        id="name"
+        name="name"
+        type="text"
+        required
+        autocomplete="name"
+        placeholder="Your name"
+        class="w-full border-0 border-b border-border bg-transparent py-3 text-sm text-foreground placeholder:text-muted-foreground/50 transition-colors focus:border-foreground focus:outline-none"
+      />
+    </Reveal>
+
+    <Reveal delay={0.06} class="flex flex-col gap-2">
+      <label
+        for="email"
+        class="text-[11px] uppercase tracking-[0.22em] text-muted-foreground"
+      >
+        Email <span class="text-accent">*</span>
+      </label>
+      <input
+        id="email"
+        name="email"
+        type="email"
+        required
+        autocomplete="email"
+        placeholder="your@email.com"
+        class="w-full border-0 border-b border-border bg-transparent py-3 text-sm text-foreground placeholder:text-muted-foreground/50 transition-colors focus:border-foreground focus:outline-none"
+      />
+    </Reveal>
+  </div>
+
+  <Reveal delay={0.08} class="flex flex-col gap-2">
+    <label
+      for="organization"
+      class="text-[11px] uppercase tracking-[0.22em] text-muted-foreground"
+    >
+      Organisation
+    </label>
+    <input
+      id="organization"
+      name="organization"
+      type="text"
+      autocomplete="organization"
+      placeholder="Company or studio (optional)"
+      class="w-full border-0 border-b border-border bg-transparent py-3 text-sm text-foreground placeholder:text-muted-foreground/50 transition-colors focus:border-foreground focus:outline-none"
+    />
+  </Reveal>
+
+  <Reveal delay={0.1} class="flex flex-col gap-2">
+    <label
+      for="interest"
+      class="text-[11px] uppercase tracking-[0.22em] text-muted-foreground"
+    >
+      Area of interest
+    </label>
+    <div class="relative">
+      <select
+        id="interest"
+        name="interest"
+        data-interest-select
+        class="w-full appearance-none border-0 border-b border-border bg-transparent py-3 text-sm text-muted-foreground transition-colors focus:border-foreground focus:outline-none"
+      >
+        <option value="" disabled selected>Select a service</option>
+        {services.map((s) => <option value={s.title}>{s.title}</option>)}
+        <option value="General inquiry">General inquiry</option>
+      </select>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="14"
+        height="14"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="pointer-events-none absolute right-0 top-1/2 -translate-y-1/2 text-muted-foreground"
+      >
+        <path d="m6 9 6 6 6-6"></path>
+      </svg>
+    </div>
+  </Reveal>
+
+  <Reveal delay={0.12} class="flex flex-col gap-2">
+    <label
+      for="message"
+      class="text-[11px] uppercase tracking-[0.22em] text-muted-foreground"
+    >
+      Message <span class="text-accent">*</span>
+    </label>
+    <textarea
+      id="message"
+      name="message"
+      required
+      rows={5}
+      placeholder="Describe your project or simply say hello."
+      class="w-full resize-none border-0 border-b border-border bg-transparent py-3 text-sm text-foreground placeholder:text-muted-foreground/50 transition-colors focus:border-foreground focus:outline-none"
+    ></textarea>
+  </Reveal>
+
+  <Reveal delay={0.16}>
+    <button
+      type="submit"
+      class="group inline-flex items-center gap-3 bg-foreground px-8 py-4 text-sm tracking-wide text-background transition-colors hover:bg-accent"
+    >
+      Send message
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="16"
+        height="16"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="transition-transform group-hover:translate-x-1"
+      >
+        <path d="M5 12h14"></path>
+        <path d="m12 5 7 7-7 7"></path>
+      </svg>
+    </button>
+  </Reveal>
+</form>
+
+<!-- Success state (hidden by default) -->
+<div
+  id="form-success"
+  class="hidden border-l-2 border-accent pl-6"
+  aria-live="polite"
+>
+  <p class="font-serif text-2xl font-light tracking-tight">Message received.</p>
+  <p class="mt-3 text-pretty leading-relaxed text-muted-foreground">
+    Thank you for reaching out. I'll be in touch within 24 hours.
+  </p>
+</div>
+
+<script>
+  function initContactForm() {
+    // Select color update
+    const select = document.querySelector<HTMLSelectElement>(
+      "[data-interest-select]",
+    );
+    if (select) {
+      const updateColor = () => {
+        const hasValue = select.value !== "";
+        select.classList.toggle("text-foreground", hasValue);
+        select.classList.toggle("text-muted-foreground", !hasValue);
+      };
+      select.addEventListener("change", updateColor);
+      updateColor();
+    }
+
+    // Form submit handler
+    const form = document.querySelector<HTMLFormElement>("[data-contact-form]");
+    const success = document.getElementById("form-success");
+    if (!form || !success) return;
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const btn = form.querySelector<HTMLButtonElement>('[type="submit"]');
+      if (btn) {
+        btn.disabled = true;
+        btn.textContent = "Sending…";
+      }
+
+      // Configure your form action endpoint here.
+      // Options: Netlify Forms (add netlify attribute), FormSpree, or your own API.
+      try {
+        const data = new FormData(form);
+        const res = await fetch(form.action, { method: "POST", body: data });
+
+        if (res.ok) {
+          form.classList.add("hidden");
+          success.classList.remove("hidden");
+        } else {
+          throw new Error("Network error");
+        }
+      } catch {
+        if (btn) {
+          btn.disabled = false;
+          btn.textContent = "Send message";
+        }
+        alert(
+          "There was an issue sending your message. Please try emailing directly: hola@veronicarosittogritti.com",
+        );
+      }
+    });
+  }
+
+  initContactForm();
+  document.addEventListener("astro:page-load", initContactForm);
+</script>

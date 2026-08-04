@@ -1,0 +1,28 @@
+---
+import { getProject, projects } from "../../lib/data/prjects";
+import Layout from "../../layouts/Layout.astro";
+import ProjectDetail from "../../components/portfolio/ProjectDetail.astro";
+import ContactInfo from "../../components/home/ContactInfo.astro";
+
+export function getStaticPaths() {
+  return projects.map((p) => ({ params: { slug: p.slug } }));
+}
+
+const { slug } = Astro.params;
+const project = getProject(slug ?? "");
+
+if (!project) {
+  return Astro.redirect("/portfolio");
+}
+
+const index = projects.findIndex((p) => p.slug === slug);
+const next = projects[(index + 1) % projects.length];
+---
+
+<Layout
+  title={`${project.title} — Verónica Rositto Gritti`}
+  description={project.summary}
+>
+  <ProjectDetail project={project} next={next} />
+  <ContactInfo />
+</Layout>

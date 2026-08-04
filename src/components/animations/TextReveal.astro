@@ -46,4 +46,5 @@ const words = text.split(" ");
 <script>
   import { initTextReveal } from "../../components/animations/text-reveal";
   initTextReveal();
+  document.addEventListener("astro:page-load", initTextReveal);
 </script>

@@ -1,0 +1,219 @@
+{
+  "Portada": {
+    "heading_before": {
+      "type": "Text",
+      "config": { "label": "Encabezado — línea 1", "placeholder": "Pensamiento de marca" }
+    },
+    "heading_highlight": {
+      "type": "Text",
+      "config": { "label": "Encabezado — línea 2 (resaltada)", "placeholder": "que se sostiene" }
+    },
+    "heading_after": {
+      "type": "Text",
+      "config": { "label": "Encabezado — línea 3", "placeholder": "a escala." }
+    },
+    "subheading": {
+      "type": "StructuredText",
+      "config": {
+        "label": "Bajada",
+        "single": "paragraph,strong,em,hyperlink"
+      }
+    }
+  },
+  "Perfil": {
+    "about_eyebrow": {
+      "type": "Text",
+      "config": { "label": "Antetítulo", "placeholder": "(01) Perfil" }
+    },
+    "photo": {
+      "type": "Image",
+      "config": { "label": "Foto de perfil", "constraint": {}, "thumbnails": [] }
+    },
+    "heading": {
+      "type": "StructuredText",
+      "config": {
+        "label": "Encabezado",
+        "single": "paragraph,strong,em"
+      }
+    },
+    "paragraph_1": {
+      "type": "StructuredText",
+      "config": {
+        "label": "Párrafo 1",
+        "single": "paragraph,strong,em,hyperlink"
+      }
+    },
+    "paragraph_2": {
+      "type": "StructuredText",
+      "config": {
+        "label": "Párrafo 2",
+        "single": "paragraph,strong,em,hyperlink"
+      }
+    },
+    "paragraph_3": {
+      "type": "StructuredText",
+      "config": {
+        "label": "Párrafo 3",
+        "single": "paragraph,strong,em,hyperlink"
+      }
+    },
+    "facts": {
+      "type": "Group",
+      "config": {
+        "label": "Datos destacados",
+        "fields": {
+          "value": {
+            "type": "Text",
+            "config": { "label": "Valor", "placeholder": "20+" }
+          },
+          "label": {
+            "type": "Text",
+            "config": { "label": "Descripción", "placeholder": "Años liderando marca y diseño" }
+          }
+        }
+      }
+    }
+  },
+  "Servicios": {
+    "services_eyebrow": {
+      "type": "Text",
+      "config": { "label": "Antetítulo", "placeholder": "(02) Qué hago" }
+    },
+    "services_heading_before": {
+      "type": "Text",
+      "config": { "label": "Encabezado — parte 1", "placeholder": "Seis disciplinas," }
+    },
+    "services_heading_highlight": {
+      "type": "Text",
+      "config": { "label": "Encabezado — parte 2 (resaltada)", "placeholder": "una forma sistémica de trabajar." }
+    },
+    "services": {
+      "type": "Group",
+      "config": {
+        "label": "Servicios",
+        "fields": {
+          "number": {
+            "type": "Text",
+            "config": { "label": "Número", "placeholder": "01" }
+          },
+          "title": {
+            "type": "Text",
+            "config": { "label": "Título" }
+          },
+          "description": {
+            "type": "StructuredText",
+            "config": {
+              "label": "Descripción",
+              "single": "paragraph"
+            }
+          }
+        }
+      }
+    },
+    "sector_experience": {
+      "type": "Text",
+      "config": {
+        "label": "Experiencia por sector",
+        "placeholder": "Institucional · Logística y Agro · Tecnología · Servicios Industriales · Cosmética · Cultura"
+      }
+    }
+  },
+  "Trabajos destacados": {
+    "work_eyebrow": {
+      "type": "Text",
+      "config": { "label": "Antetítulo", "placeholder": "(03) Trabajos destacados" }
+    },
+    "work_heading": {
+      "type": "Text",
+      "config": { "label": "Encabezado", "placeholder": "Sistemas de identidad construidos para durar." }
+    },
+    "link_label": {
+      "type": "Text",
+      "config": { "label": "Texto del enlace \"ver todos\"", "placeholder": "Todos los proyectos" }
+    },
+    "featured_projects": {
+      "type": "Group",
+      "config": {
+        "label": "Proyectos destacados",
+        "fields": {
+          "project": {
+            "type": "Link",
+            "config": {
+              "label": "Proyecto",
+              "select": "document",
+              "customtypes": ["portfolio"]
+            }
+          }
+        }
+      }
+    }
+  },
+  "Clientes": {
+    "clients_eyebrow": {
+      "type": "Text",
+      "config": { "label": "Antetítulo", "placeholder": "(04) Clientes destacados" }
+    },
+    "clients": {
+      "type": "Group",
+      "config": {
+        "label": "Clientes",
+        "fields": {
+          "name": {
+            "type": "Text",
+            "config": { "label": "Nombre del cliente" }
+          }
+        }
+      }
+    }
+  },
+  "Contacto": {
+    "heading_main": {
+      "type": "Text",
+      "config": {
+        "label": "Encabezado principal",
+        "placeholder": "Disponible para roles de Brand Strategy Lead, Head of Design o Dirección Creativa"
+      }
+    },
+    "heading_secondary": {
+      "type": "Text",
+      "config": {
+        "label": "Encabezado secundario (resaltado)",
+        "placeholder": "en agencias creativas, consultoras estratégicas u organizaciones con foco en marca."
+      }
+    },
+    "email": {
+      "type": "Text",
+      "config": { "label": "Email", "placeholder": "hola@veronicarosittogritti.com" }
+    },
+    "phone": {
+      "type": "Text",
+      "config": { "label": "Teléfono", "placeholder": "+54 9 341 515 0801" }
+    },
+    "linkedin_label": {
+      "type": "Text",
+      "config": { "label": "Texto del enlace de LinkedIn", "placeholder": "/in/veronicarosittogritti" }
+    },
+    "linkedin_url": {
+      "type": "Link",
+      "config": { "label": "URL de LinkedIn", "select": "web" }
+    },
+    "location": {
+      "type": "Text",
+      "config": { "label": "Ubicación", "placeholder": "Rosario, Argentina" }
+    }
+  },
+  "SEO y metadatos": {
+    "meta_title": {
+      "type": "Text",
+      "config": { "label": "Título SEO" }
+    },
+    "meta_description": {
+      "type": "Text",
+      "config": { "label": "Descripción SEO" }
+    },
+    "meta_image": {
+      "type": "Image",
+      "config": { "label": "Imagen para redes sociales", "constraint": {}, "thumbnails": [] }
+    }
+  }
+}

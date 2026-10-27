@@ -1,11 +1,15 @@
 ---
-import { projects } from "../../lib/data/prjects";
+import { createClient } from "../../lib/prismicio";
+import type { PortfolioDocument } from "../../types/prismic";
 import Reveal from "../animations/Reveal.astro";
 import ProjectCard from "../ProjectCard.astro";
 
+const client = createClient();
+const projects = await client.getAllByType<PortfolioDocument>("portfolio");
+
 const categories = [
-  "All",
-  ...Array.from(new Set(projects.map((p) => p.category))),
+  "Todos",
+  ...Array.from(new Set(projects.map((p) => p.data.category))),
 ];
 ---
 
@@ -22,7 +26,7 @@ const categories = [
             data-filter={cat}
             class:list={[
               "rounded-full px-4 py-2 text-sm transition-colors",
-              cat === "All"
+              cat === "Todos"
                 ? "bg-foreground text-background"
                 : "text-muted-foreground hover:text-foreground",
             ]}
@@ -37,7 +41,10 @@ const categories = [
     <div class="grid gap-x-8 gap-y-14 md:grid-cols-2">
       {
         projects.map((project, i) => (
-          <div data-project-item data-project-category={project.category}>
+          <div
+            data-project-item
+            data-project-category={project.data.category}
+          >
             <Reveal delay={(i % 2) * 0.08}>
               <ProjectCard project={project} index={i} />
             </Reveal>
@@ -64,14 +71,14 @@ const categories = [
 
       items.forEach((item) => {
         const match =
-          filter === "All" || item.dataset.projectCategory === filter;
+          filter === "Todos" || item.dataset.projectCategory === filter;
         item.style.display = match ? "" : "none";
       });
     }
 
     buttons.forEach((btn) => {
       btn.addEventListener("click", () => {
-        setActive(btn.dataset.filter ?? "All");
+        setActive(btn.dataset.filter ?? "Todos");
       });
     });
   }

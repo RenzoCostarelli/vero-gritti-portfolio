@@ -1,27 +1,35 @@
 ---
-import { getProject, projects } from "../../lib/data/prjects";
+import { createClient } from "../../lib/prismicio";
+import type { PortfolioDocument } from "../../types/prismic";
 import Layout from "../../layouts/Layout.astro";
 import ProjectDetail from "../../components/portfolio/ProjectDetail.astro";
 import ContactInfo from "../../components/home/ContactInfo.astro";
+import { asText } from "@prismicio/client";
 
-export function getStaticPaths() {
-  return projects.map((p) => ({ params: { slug: p.slug } }));
+export async function getStaticPaths() {
+  const client = createClient();
+  const projects = await client.getAllByType<PortfolioDocument>("portfolio");
+
+  return projects.map((project, index) => {
+    const next = projects[(index + 1) % projects.length];
+    return {
+      params: { slug: project.uid },
+      props: { project, next },
+    };
+  });
 }
 
-const { slug } = Astro.params;
-const project = getProject(slug ?? "");
-
-if (!project) {
-  return Astro.redirect("/portfolio");
+interface Props {
+  project: PortfolioDocument;
+  next: PortfolioDocument;
 }
 
-const index = projects.findIndex((p) => p.slug === slug);
-const next = projects[(index + 1) % projects.length];
+const { project, next } = Astro.props;
 ---
 
 <Layout
-  title={`${project.title} — Verónica Rositto Gritti`}
-  description={project.summary}
+  title={`${project.data.title} — Verónica Rositto Gritti`}
+  description={asText(project.data.summary)}
 >
   <ProjectDetail project={project} next={next} />
   <ContactInfo />

@@ -1,6 +1,37 @@
 ---
+import { asLink } from "@prismicio/client";
+import { createClient, linkResolver } from "../../lib/prismicio";
+import type { HomeDocument } from "../../types/prismic";
 import Reveal from "../animations/Reveal.astro";
 import TextReveal from "../animations/TextReveal.astro";
+
+const client = createClient();
+const page = await client.getSingle<HomeDocument>("home");
+const {
+  heading_main,
+  heading_secondary,
+  email,
+  phone,
+  linkedin_label,
+  linkedin_url,
+  location,
+} = page.data;
+
+const contactItems = [
+  { label: "Email", value: email, href: `mailto:${email}`, external: false },
+  {
+    label: "Teléfono",
+    value: phone,
+    href: `tel:${(phone ?? "").replace(/\s+/g, "")}`,
+    external: false,
+  },
+  {
+    label: "LinkedIn",
+    value: linkedin_label,
+    href: asLink(linkedin_url, { linkResolver }) ?? "#",
+    external: true,
+  },
+];
 ---
 
 <section
@@ -12,14 +43,11 @@ import TextReveal from "../animations/TextReveal.astro";
       <h2
         class="mt-6 font-serif font-light leading-[1.12] tracking-tight md:text-[1.65rem] flex flex-col"
       >
-        <TextReveal
-          as="span"
-          text="Available for Brand Strategy Lead, Head of Design or Creative Direction roles"
-        />
+        <TextReveal as="span" text={heading_main ?? ""} />
         {" "}
         <TextReveal
           as="span"
-          text="at creative agencies, strategic consultancies or brand-led organisations."
+          text={heading_secondary ?? ""}
           class="italic text-foreground/40"
         />
       </h2>
@@ -27,33 +55,15 @@ import TextReveal from "../animations/TextReveal.astro";
 
     <div class="space-y-8 lg:col-span-5 lg:border-l lg:border-border lg:pl-12">
       {
-        [
-          {
-            label: "Email",
-            value: "hola@veronicarosittogritti.com",
-            href: "mailto:hola@veronicarosittogritti.com",
-          },
-          {
-            label: "Phone",
-            value: "+54 9 341 515 0801",
-            href: "tel:+5493415150801",
-          },
-          {
-            label: "LinkedIn",
-            value: "/in/veronicarosittogritti",
-            href: "https://linkedin.com/in/veronicarosittogritti",
-          },
-        ].map((item, i) => (
+        contactItems.map((item, i) => (
           <Reveal delay={i * 0.08}>
             <p class="text-[11px] uppercase tracking-[0.2em] text-muted-foreground">
               {item.label}
             </p>
             <a
               href={item.href}
-              target={item.label === "LinkedIn" ? "_blank" : undefined}
-              rel={
-                item.label === "LinkedIn" ? "noopener noreferrer" : undefined
-              }
+              target={item.external ? "_blank" : undefined}
+              rel={item.external ? "noopener noreferrer" : undefined}
               class="group mt-2 inline-flex items-center gap-1 font-serif text-xl font-light tracking-tight transition-colors hover:text-accent"
             >
               {item.value}
@@ -63,10 +73,10 @@ import TextReveal from "../animations/TextReveal.astro";
       }
       <Reveal delay={0.24}>
         <p class="text-[11px] uppercase tracking-[0.2em] text-muted-foreground">
-          Based in
+          Basada en
         </p>
         <p class="mt-2 font-serif text-xl font-light tracking-tight">
-          Rosario, Argentina
+          {location}
         </p>
       </Reveal>
     </div>

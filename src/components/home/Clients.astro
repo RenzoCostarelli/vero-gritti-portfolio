@@ -1,19 +1,25 @@
 ---
-import { clients } from "../../lib/data/prjects";
+import { createClient } from "../../lib/prismicio";
+import type { HomeDocument } from "../../types/prismic";
 
-const items = [...clients, ...clients];
+const client = createClient();
+const page = await client.getSingle<HomeDocument>("home");
+const { clients_eyebrow, clients } = page.data;
+
+const clientNames = clients.map((c) => c.name);
+const items = [...clientNames, ...clientNames];
 ---
 
 <section class="overflow-hidden border-t border-border py-16 md:py-20">
   <div class="mx-auto mb-10 container px-5 md:px-10">
     <p class="text-[11px] uppercase tracking-[0.22em] text-muted-foreground">
-      (04) Selected clients
+      {clients_eyebrow}
     </p>
   </div>
   <div class="relative">
     <div class="flex w-max">
       {
-        items.map((client, i) => (
+        items.map((client) => (
           <div class="flex shrink-0 items-center gap-10 px-8 md:gap-16 md:px-12">
             <span class="whitespace-nowrap font-serif text-2xl font-light tracking-tight text-muted-foreground md:text-4xl">
               {client}

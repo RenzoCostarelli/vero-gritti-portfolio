@@ -1,5 +1,12 @@
 ---
-const lines = ["Brand thinking", "that holds up", "at scale."];
+import { asText } from "@prismicio/client";
+import { createClient } from "../../lib/prismicio";
+import type { HomeDocument } from "../../types/prismic";
+
+const client = createClient();
+const page = await client.getSingle<HomeDocument>("home");
+const { heading_before, heading_highlight, heading_after, subheading } =
+  page.data;
 ---
 
 <section
@@ -9,19 +16,21 @@ const lines = ["Brand thinking", "that holds up", "at scale."];
     <h1
       class="font-serif text-[clamp(2.75rem,3vw,3.05rem)] font-light leading-[0.92] tracking-[-0.02em]"
     >
-      {
-        lines.map((line, i) => (
-          <span data-line class="mr-3">
-            <span class="inline-block will-change-transform">
-              {i === 1 ? (
-                <em class="font-serif italic text-accent">{line}</em>
-              ) : (
-                line
-              )}
-            </span>
-          </span>
-        ))
-      }
+      <span data-line class="mr-3">
+        <span class="inline-block will-change-transform">
+          {heading_before}
+        </span>
+      </span>
+      <span data-line class="mr-3">
+        <span class="inline-block will-change-transform">
+          <em class="font-serif italic text-accent">{heading_highlight}</em>
+        </span>
+      </span>
+      <span data-line class="mr-3">
+        <span class="inline-block will-change-transform">
+          {heading_after}
+        </span>
+      </span>
     </h1>
 
     <div
@@ -31,8 +40,7 @@ const lines = ["Brand thinking", "that holds up", "at scale."];
         data-fade
         class="text-pretty text-[clamp(1.2rem,0.5vw,1rem)] max-w-3xl leading-none text-neutral-900"
       >
-        I translate business decisions into coherenty visual system and sustain
-        them at scale, without losing strategic focus or execution quality
+        {asText(subheading)}
       </p>
     </div>
   </div>

@@ -1,7 +1,19 @@
 ---
-import { services } from "../../lib/data/prjects";
+import { asText } from "@prismicio/client";
+import { createClient } from "../../lib/prismicio";
+import type { HomeDocument } from "../../types/prismic";
 import Reveal from "../animations/Reveal.astro";
 import TextReveal from "../animations/TextReveal.astro";
+
+const client = createClient();
+const page = await client.getSingle<HomeDocument>("home");
+const {
+  services_eyebrow,
+  services_heading_before,
+  services_heading_highlight,
+  services,
+  sector_experience,
+} = page.data;
 ---
 
 <section
@@ -12,19 +24,19 @@ import TextReveal from "../animations/TextReveal.astro";
     <div class="flex flex-col gap-8">
       <div class="">
         <p class="text-[11px] uppercase tracking-[0.22em] text-foreground/50">
-          (02) What I do
+          {services_eyebrow}
         </p>
       </div>
       <div class="">
         <h2 class="font-serif text-3xl font-light leading-[1.12] tracking-tight sm:text-4xl md:text-5xl">
           <TextReveal
             as="span"
-            text="Six disciplines,"
+            text={services_heading_before ?? ""}
           />
           {" "}
           <TextReveal
             as="span"
-            text="one systemic way of working."
+            text={services_heading_highlight ?? ""}
             class="italic text-foreground/40"
           />
         </h2>
@@ -45,7 +57,7 @@ import TextReveal from "../animations/TextReveal.astro";
               {service.title}
             </h3>
             <p class="max-w-md text-pretty leading-relaxed text-foreground/60 md:col-span-6">
-              {service.description}
+              {asText(service.description)}
             </p>
           </li>
         ))
@@ -54,8 +66,7 @@ import TextReveal from "../animations/TextReveal.astro";
 
     <Reveal class="mt-12">
       <p class="text-sm text-foreground/50">
-        Sector experience — Institutional · Logistics &amp; Agro · Technology ·
-        Industrial Services · Cosmetics · Culture
+        {sector_experience}
       </p>
     </Reveal>
   </div>

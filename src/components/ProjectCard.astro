@@ -1,14 +1,23 @@
 ---
+import type { PortfolioDocument } from "../types/prismic";
+
+interface Props {
+  project: PortfolioDocument;
+  index?: number;
+  className?: string;
+}
+
 const { project, index, className } = Astro.props;
+const { title, category, year, cover } = project.data;
 ---
 
-<a href={`/portfolio/${project.slug}`} class:list={["group block", className]}>
+<a href={`/portfolio/${project.uid}`} class:list={["group block", className]}>
   <div
     class="relative aspect-[4/3] w-full overflow-hidden rounded-md bg-neutral-100"
   >
     <img
-      src={project.cover || "/placeholder.svg"}
-      alt={project.title}
+      src={cover.url || "/placeholder.svg"}
+      alt={cover.alt || title || ""}
       sizes="(max-width: 768px) 100vw, 50vw"
       class="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
     />
@@ -23,10 +32,10 @@ const { project, index, className } = Astro.props;
   >
     <div>
       <h3 class="font-serif text-xl font-light tracking-tight md:text-2xl">
-        {project.title}
+        {title}
       </h3>
       <p class="mt-1 text-sm text-muted-foreground">
-        {project.category}
+        {category}
       </p>
     </div>
     <div class="text-right">
@@ -37,7 +46,7 @@ const { project, index, className } = Astro.props;
           </span>
         )
       }
-      <p class="mt-1 text-sm text-muted-foreground">{project.year}</p>
+      <p class="mt-1 text-sm text-muted-foreground">{year}</p>
     </div>
   </div>
 </a>

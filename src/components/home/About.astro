@@ -1,13 +1,26 @@
 ---
+import { asText } from "@prismicio/client";
+import { createClient } from "../../lib/prismicio";
+import type { HomeDocument } from "../../types/prismic";
 import Reveal from "../animations/Reveal.astro";
 import TextReveal from "../animations/TextReveal.astro";
 
-const facts = [
-  { value: "20+", label: "Years leading brand & design" },
-  { value: "2006", label: "Founded Ampersand Group" },
-  { value: "6 yrs", label: "In-house agency for BCR" },
-  { value: "C-level", label: "Client management" },
-];
+const client = createClient();
+const page = await client.getSingle<HomeDocument>("home");
+const {
+  about_eyebrow,
+  photo,
+  heading,
+  paragraph_1,
+  paragraph_2,
+  paragraph_3,
+  facts,
+} = page.data;
+
+const photoUrl =
+  photo.url ??
+  "https://res.cloudinary.com/dkgnaegp9/image/upload/v1785334078/My_Identity_AVATAR_skdojr.jpg";
+const photoAlt = photo.alt ?? "Retrato de Verónica Rositto Gritti";
 ---
 
 <section id="about" class="border-t border-border px-5 py-24 md:px-10 md:py-32">
@@ -17,7 +30,7 @@ const facts = [
         <p
           class="text-[11px] uppercase tracking-[0.22em] text-muted-foreground"
         >
-          (01) Profile
+          {about_eyebrow}
         </p>
       </Reveal>
       <Reveal delay={0.05} class="mt-8">
@@ -25,8 +38,8 @@ const facts = [
           class="relative aspect-square w-full overflow-hidden rounded-md bg-neutral-100 shadow-2xl"
         >
           <img
-            src="https://res.cloudinary.com/dkgnaegp9/image/upload/v1785334078/My_Identity_AVATAR_skdojr.jpg"
-            alt="Portrait of Verónica Rositto Gritti"
+            src={photoUrl}
+            alt={photoAlt}
             sizes="(max-width: 1024px) 100vw, 40vw"
             class="object-cover w-full h-full"
           />
@@ -37,27 +50,16 @@ const facts = [
     <div class="lg:col-span-8 lg:pt-12">
       <TextReveal
         as="h2"
-        text="Creative director and brand strategist leading identity, communication and design systems for growing organisations."
+        text={asText(heading)}
         class="font-serif text-3xl tracking-tight sm:text-4xl md:text-[2.8rem] text-pretty"
       />
 
       <div
         class="mt-8 max-w-4xl space-y-5 text-pretty leading-relaxed text-muted-foreground"
       >
-        <Reveal as="p">
-          I founded Ampersand Group in 2006 and spent six years as BCR's
-          in-house agency — managing teams, suppliers and multiple communication
-          streams in parallel within a complex institutional environment.
-        </Reveal>
-        <Reveal as="p" delay={0.08}>
-          My edge: translating business decisions into coherent visual systems
-          and sustaining them at scale, without losing strategic focus or
-          execution quality.
-        </Reveal>
-        <Reveal as="p" delay={0.4}>
-          I work across institutional, logistic, agro, technology, cosmetic and
-          culture.
-        </Reveal>
+        <Reveal as="p">{asText(paragraph_1)}</Reveal>
+        <Reveal as="p" delay={0.08}>{asText(paragraph_2)}</Reveal>
+        <Reveal as="p" delay={0.4}>{asText(paragraph_3)}</Reveal>
       </div>
 
       <div
